@@ -15,6 +15,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
 import java.util.concurrent.TimeUnit;
 
 @RequiredArgsConstructor
@@ -68,13 +70,19 @@ public class UserService {
     }
 
     @Transactional
-    public ResponseDto withdrawal(String email) {
+    public ResponseDto withdrawal(String email, ServletRequest request) {
+
+        String token = jwtAuthenticationProvider.resolveToken((HttpServletRequest) request);
+        User user = (User) userDetailsService.loadUserByUsername(jwtAuthenticationProvider.getUserPk(token));
 
         if(!userRepository.existsByEmail(email)){
             return new ResponseDto("FAIL","존재하지 않는 이메일입니다.");
         }
 
-        User user = userRepository.findByEmail(email);
+        if(!email.equals(user.getEmail())){
+            return new ResponseDto("FAIL","이메일을 다시 확인해주세요.");
+        }
+
         userRepository.delete(user);
 
         return new ResponseDto("SUCCESS",user.getId());

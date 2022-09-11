@@ -32,6 +32,10 @@ public class UserService {
     @Transactional
     public ResponseDto signUp(SignUpRequestDto signUpRequestDto) {
 
+        if(userRepository.existsByEmail(signUpRequestDto.getEmail())){
+            return new ResponseDto("FAIL","이미 존재하는 이메일입니다.");
+        }
+
         User user = User.builder()
                 .name(signUpRequestDto.getName())
                 .email(signUpRequestDto.getEmail())

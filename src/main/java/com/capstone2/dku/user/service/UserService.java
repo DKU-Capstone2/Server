@@ -41,6 +41,7 @@ public class UserService {
         return new ResponseDto("SUCCESS", user.getId());
     }
 
+    @Transactional
     public ResponseDto signIn(SignInRequestDto signInRequestDto) {
 
         if (!userRepository.existsByEmail(signInRequestDto.getEmail())) {
@@ -64,5 +65,18 @@ public class UserService {
 
         return new ResponseDto("SUCCESS",loginDto);
 
+    }
+
+    @Transactional
+    public ResponseDto withdrawal(String email) {
+
+        if(!userRepository.existsByEmail(email)){
+            return new ResponseDto("FAIL","존재하지 않는 이메일입니다.");
+        }
+
+        User user = userRepository.findByEmail(email);
+        userRepository.delete(user);
+
+        return new ResponseDto("SUCCESS",user.getId());
     }
 }

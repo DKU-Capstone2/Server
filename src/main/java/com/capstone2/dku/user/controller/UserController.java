@@ -1,6 +1,7 @@
 package com.capstone2.dku.user.controller;
 
 import com.capstone2.dku.ResponseDto;
+import com.capstone2.dku.user.dto.SignInRequestDto;
 import com.capstone2.dku.user.dto.SignUpRequestDto;
 import com.capstone2.dku.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -20,5 +21,10 @@ public class UserController {
     @PostMapping("/user/signUp")
     public ResponseDto signUp(@Valid @RequestBody SignUpRequestDto signUpRequestDto){
         return userService.signUp(signUpRequestDto);
+    }
+
+    @PostMapping("/user/signIn")
+    public ResponseDto signIn(@Valid @RequestBody SignInRequestDto signInRequestDto){
+        return userService.signIn(signInRequestDto);
     }
 }

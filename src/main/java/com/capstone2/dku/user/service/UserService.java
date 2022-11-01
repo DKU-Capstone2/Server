@@ -32,18 +32,18 @@ public class UserService {
     @Transactional
     public ResponseDto signUp(SignUpRequestDto signUpRequestDto) {
 
-        if(userRepository.existsByEmail(signUpRequestDto.getEmail())){
-            return new ResponseDto("FAIL","이미 존재하는 이메일입니다.");
+        if (userRepository.existsByEmail(signUpRequestDto.getEmail())) {
+            return new ResponseDto("FAIL", "이미 존재하는 이메일입니다.");
         }
 
-        if(!signUpRequestDto.getPassword().equals(signUpRequestDto.getCheckPassword())){
+        if (!signUpRequestDto.getPassword().equals(signUpRequestDto.getCheckPassword())) {
             return new ResponseDto("FAIL", "입력하신 두개의 비밀번호가 서로 다릅니다.");
         }
 
         // 위의 두개의 if()문을 더 예쁘게 리팩터링 하는 방법
         // 해당 과정을 메서드로 만들어버리기(?)
 
-         User user = User.builder()
+        User user = User.builder()
                 .name(signUpRequestDto.getName())
                 .email(signUpRequestDto.getEmail())
                 .password(passwordEncoder.encode(signUpRequestDto.getPassword()))
@@ -60,7 +60,8 @@ public class UserService {
     public ResponseDto signIn(SignInRequestDto signInRequestDto) {
 
         if (!userRepository.existsByEmail(signInRequestDto.getEmail())) {
-            return new ResponseDto("FAIL", "존재하지 않는 이메일입니다.");}
+            return new ResponseDto("FAIL", "존재하지 않는 이메일입니다.");
+        }
 
         User user = userRepository.findByEmail(signInRequestDto.getEmail());
         if (!passwordEncoder.matches(signInRequestDto.getPassword(), user.getPassword())) {
@@ -71,14 +72,14 @@ public class UserService {
 
         // 생성된 "RefreshToken"를 "Redis"에 저장, 시간이 만료 되면 자동적으로 삭제
         // key 값: "RT:email",
-        redisTemplate.opsForValue().set("RT:"+user.getEmail(),
+        redisTemplate.opsForValue().set("RT:" + user.getEmail(),
                 tokenDto.getRefreshToken(), tokenDto.getRefreshTokenTime(), TimeUnit.MILLISECONDS);
 
         LoginDto loginDto = new LoginDto();
         loginDto.setUserId(user.getId());
         loginDto.setTokenDto(tokenDto);
 
-        return new ResponseDto("SUCCESS",loginDto);
+        return new ResponseDto("SUCCESS", loginDto);
 
     }
 
@@ -88,16 +89,16 @@ public class UserService {
         String token = jwtAuthenticationProvider.resolveToken((HttpServletRequest) request);
         User user = (User) userDetailsService.loadUserByUsername(jwtAuthenticationProvider.getUserPk(token));
 
-        if(!userRepository.existsByEmail(email)){
-            return new ResponseDto("FAIL","존재하지 않는 이메일입니다.");
+        if (!userRepository.existsByEmail(email)) {
+            return new ResponseDto("FAIL", "존재하지 않는 이메일입니다.");
         }
 
-        if(!email.equals(user.getEmail())){
-            return new ResponseDto("FAIL","이메일을 다시 확인해주세요.");
+        if (!email.equals(user.getEmail())) {
+            return new ResponseDto("FAIL", "이메일을 다시 확인해주세요.");
         }
 
         userRepository.delete(user);
 
-        return new ResponseDto("SUCCESS",user.getId());
+        return new ResponseDto("SUCCESS", user.getId());
     }
 }

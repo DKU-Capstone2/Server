@@ -17,20 +17,19 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/user/signUp")
-    public ResponseDto signUp(@Valid @RequestBody SignUpRequestDto signUpRequestDto){
+    public ResponseDto signUp(@Valid @RequestBody SignUpRequestDto signUpRequestDto) {
         return userService.signUp(signUpRequestDto);
     }
 
     @PostMapping("/user/signIn")
-    public ResponseDto signIn(@Valid @RequestBody SignInRequestDto signInRequestDto){
+    public ResponseDto signIn(@Valid @RequestBody SignInRequestDto signInRequestDto) {
         return userService.signIn(signInRequestDto);
     }
 
     @DeleteMapping("/user/withdrawal/{email}")
-    public ResponseDto Withdrawal(@PathVariable String email, ServletRequest request){
+    public ResponseDto Withdrawal(@PathVariable String email, ServletRequest request) {
         return userService.withdrawal(email, request);
     }
-
 
 
 }

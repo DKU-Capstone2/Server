@@ -33,11 +33,19 @@ public class User implements UserDetails {
     @Column(name = "password")
     private String password;
 
+    @Column(name = "phone_number")
+    private String phoneNumber;
+
+    @Column(name = "role")
+    private String role;
+
     @Builder
-    public User(String name, String email, String password){
+    public User(String name, String email, String password, String phoneNumber, String role) {
         this.name = name;
         this.email = email;
         this.password = password;
+        this.phoneNumber = phoneNumber;
+        this.role = role;
     }
 
     @ElementCollection(fetch = FetchType.EAGER)
@@ -56,7 +64,9 @@ public class User implements UserDetails {
     }
 
     @Override
-    public String getPassword(){ return password;}
+    public String getPassword() {
+        return password;
+    }
 
     @Override
     public boolean isAccountNonExpired() {

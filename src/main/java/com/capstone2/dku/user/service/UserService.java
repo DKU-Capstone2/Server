@@ -32,16 +32,11 @@ public class UserService {
     @Transactional
     public ResponseDto signUp(SignUpRequestDto signUpRequestDto) {
 
-        if (userRepository.existsByEmail(signUpRequestDto.getEmail())) {
-            return new ResponseDto("FAIL", "이미 존재하는 이메일입니다.");
-        }
+        ResponseDto verifyResult = verifySignUp(signUpRequestDto);
 
-        if (!signUpRequestDto.getPassword().equals(signUpRequestDto.getCheckPassword())) {
-            return new ResponseDto("FAIL", "입력하신 두개의 비밀번호가 서로 다릅니다.");
+        if (verifyResult.getResult().equals("FAIL")) {
+            return verifyResult;
         }
-
-        // 위의 두개의 if()문을 더 예쁘게 리팩터링 하는 방법
-        // 해당 과정을 메서드로 만들어버리기(?)
 
         User user = User.builder()
                 .name(signUpRequestDto.getName())
@@ -100,5 +95,18 @@ public class UserService {
         userRepository.delete(user);
 
         return new ResponseDto("SUCCESS", user.getId());
+    }
+
+    private ResponseDto verifySignUp(SignUpRequestDto signUpRequestDto) {
+
+        if (userRepository.existsByEmail(signUpRequestDto.getEmail())) {
+            return new ResponseDto("FAIL", "이미 존재하는 이메일입니다.");
+        }
+
+        if (!signUpRequestDto.getPassword().equals(signUpRequestDto.getCheckPassword())) {
+            return new ResponseDto("FAIL", "입력하신 두개의 비밀번호가 서로 다릅니다.");
+        }
+
+        return new ResponseDto("SUCCESS");
     }
 }

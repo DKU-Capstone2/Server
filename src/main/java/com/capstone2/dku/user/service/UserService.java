@@ -2,12 +2,14 @@ package com.capstone2.dku.user.service;
 
 import com.capstone2.dku.ResponseDto;
 import com.capstone2.dku.config.security.JwtAuthenticationProvider;
+import com.capstone2.dku.reader.domain.Reader;
 import com.capstone2.dku.user.domain.User;
 import com.capstone2.dku.user.domain.UserRepository;
 import com.capstone2.dku.user.dto.LoginDto;
 import com.capstone2.dku.user.dto.SignInRequestDto;
 import com.capstone2.dku.user.dto.SignUpRequestDto;
 import com.capstone2.dku.user.dto.TokenDto;
+import com.capstone2.dku.writer.domain.Writer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -38,17 +40,21 @@ public class UserService {
             return verifyResult;
         }
 
-        User user = User.builder()
-                .name(signUpRequestDto.getName())
-                .email(signUpRequestDto.getEmail())
-                .password(passwordEncoder.encode(signUpRequestDto.getPassword()))
-                .phoneNumber(signUpRequestDto.getPhoneNumber())
-                .role(signUpRequestDto.getRole())
-                .build();
+        if(signUpRequestDto.getRole().equals("w")){
+            Writer writer = new Writer(signUpRequestDto.getName(), signUpRequestDto.getEmail(), signUpRequestDto.getPassword(),
+                    signUpRequestDto.getPhoneNumber(), signUpRequestDto.getRole());
 
-        userRepository.save(user);
+            userRepository.save(writer);
 
-        return new ResponseDto("SUCCESS", user.getId());
+            return new ResponseDto("SUCCESS", writer.getId());
+        }
+
+        Reader reader = new Reader(signUpRequestDto.getName(), signUpRequestDto.getEmail(), signUpRequestDto.getPassword(),
+                signUpRequestDto.getPhoneNumber(), signUpRequestDto.getRole());
+
+        userRepository.save(reader);
+
+        return new ResponseDto("SUCCESS", reader.getId());
     }
 
     @Transactional

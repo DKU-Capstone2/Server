@@ -17,7 +17,7 @@ public class PostController {
 
     private final PostService postService;
 
-    @PostMapping("/post/create")
+    @PostMapping("/post")
     public ResponseDto createPost(ServletRequest request, @Valid @RequestBody CreatePostRequestDto createPostRequestDto) {
         return postService.createPost(request, createPostRequestDto);
     }

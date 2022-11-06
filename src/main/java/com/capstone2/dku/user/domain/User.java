@@ -15,6 +15,8 @@ import java.util.stream.Collectors;
 
 @NoArgsConstructor
 @Getter
+@DiscriminatorColumn
+@Inheritance(strategy = InheritanceType.JOINED)
 @Entity
 @Table(name = "user")
 public class User implements UserDetails {
@@ -36,16 +38,11 @@ public class User implements UserDetails {
     @Column(name = "phone_number")
     private String phoneNumber;
 
-    @Column(name = "role")
-    private String role;
-
-    @Builder
-    public User(String name, String email, String password, String phoneNumber, String role) {
+    public User(String name, String email, String password, String phoneNumber) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.phoneNumber = phoneNumber;
-        this.role = role;
     }
 
     @ElementCollection(fetch = FetchType.EAGER)

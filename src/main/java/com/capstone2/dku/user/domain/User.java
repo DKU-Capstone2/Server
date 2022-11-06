@@ -15,6 +15,8 @@ import java.util.stream.Collectors;
 
 @NoArgsConstructor
 @Getter
+@DiscriminatorColumn
+@Inheritance(strategy = InheritanceType.JOINED)
 @Entity
 @Table(name = "user")
 public class User implements UserDetails {
@@ -33,11 +35,14 @@ public class User implements UserDetails {
     @Column(name = "password")
     private String password;
 
-    @Builder
-    public User(String name, String email, String password){
+    @Column(name = "phone_number")
+    private String phoneNumber;
+
+    public User(String name, String email, String password, String phoneNumber) {
         this.name = name;
         this.email = email;
         this.password = password;
+        this.phoneNumber = phoneNumber;
     }
 
     @ElementCollection(fetch = FetchType.EAGER)
@@ -56,7 +61,9 @@ public class User implements UserDetails {
     }
 
     @Override
-    public String getPassword(){ return password;}
+    public String getPassword() {
+        return password;
+    }
 
     @Override
     public boolean isAccountNonExpired() {

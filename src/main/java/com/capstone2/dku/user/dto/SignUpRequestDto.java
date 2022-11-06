@@ -21,10 +21,14 @@ public class SignUpRequestDto {
     @Size(min=4,max=15, message = "4~15 글자의 패스워드를 입력해주세요")
     private String password;
 
-    @Builder
-    public SignUpRequestDto(String name, String email, String password){
-        this.name = name;
-        this.email = email;
-        this.password = password;
-    }
+    @Size(min=4,max=15, message = "4~15 글자의 패스워드를 입력해주세요")
+    private String checkPassword;
+
+    @NotBlank(message = "작가, 독자를 선택해주세요")
+    private String role;
+
+    @Size(min=11, max=13, message = "핸드폰 번호를 입력해주세요")
+    private String phoneNumber;
+
+
 }

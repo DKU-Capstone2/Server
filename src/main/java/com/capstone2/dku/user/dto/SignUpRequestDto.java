@@ -30,5 +30,6 @@ public class SignUpRequestDto {
     @Size(min=11, max=13, message = "핸드폰 번호를 입력해주세요")
     private String phoneNumber;
 
-
+    // 작가만 사용하는 필드로 작가의 유형("단편소설", "장편소설" ...)
+    private String type;
 }

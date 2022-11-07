@@ -42,7 +42,7 @@ public class UserService {
 
         if(signUpRequestDto.getRole().equals("w")){
             Writer writer = new Writer(signUpRequestDto.getName(), signUpRequestDto.getEmail(), signUpRequestDto.getPassword(),
-                    signUpRequestDto.getPhoneNumber(), signUpRequestDto.getRole());
+                    signUpRequestDto.getPhoneNumber(), signUpRequestDto.getRole(), signUpRequestDto.getType());
 
             userRepository.save(writer);
 

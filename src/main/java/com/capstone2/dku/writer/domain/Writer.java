@@ -9,8 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 
 @NoArgsConstructor
-@DiscriminatorValue("w")
 @PrimaryKeyJoinColumn(name = "writer_id")
+@DiscriminatorValue("w")
 @Entity
 public class Writer extends User {
 

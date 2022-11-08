@@ -18,4 +18,9 @@ public class WriterController {
         return writerService.returnWriterList(type);
     }
 
+    @GetMapping("/writer/profile/{id}")
+    public ResponseDto returnWriterProfile(@PathVariable Long id){
+        return writerService.returnWriterProfile(id);
+    }
+
 }

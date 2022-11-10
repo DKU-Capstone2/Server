@@ -1,5 +1,6 @@
 package com.capstone2.dku.exception;
 
+import com.capstone2.dku.exception.domain.WriterNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
@@ -15,8 +16,8 @@ public class ExceptionController {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ExceptionResponseDto invalidRequestExceptionHandler(MethodArgumentNotValidException e){
-        log.error("[invalidRequestExceptionHandler]: {}",e);
+    public ExceptionResponseDto invalidRequestExceptionHandler(MethodArgumentNotValidException e) {
+        log.error("[invalidRequestExceptionHandler]: {}", e);
 
         // "@Valid"에 맞지 않을 때 예외 처리
         ExceptionResponseDto exceptionResponseDto = ExceptionResponseDto.builder()
@@ -29,8 +30,8 @@ public class ExceptionController {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(IllegalArgumentException.class)
-    public ExceptionResponseDto requestExceptionHandler(IllegalArgumentException e){
-        log.error("[requestExceptionHandler]: {}",e);
+    public ExceptionResponseDto requestExceptionHandler(IllegalArgumentException e) {
+        log.error("[requestExceptionHandler]: {}", e);
 
         // 잘못된 요청일 때 예외 처리
         ExceptionResponseDto exceptionResponseDto = ExceptionResponseDto.builder()
@@ -43,8 +44,8 @@ public class ExceptionController {
     }
 
     @ExceptionHandler(NoHandlerFoundException.class)
-    public ExceptionResponseDto notFoundExceptionHandler(NoHandlerFoundException e){
-        log.error("[UrlExceptionHandler]: {}",e);
+    public ExceptionResponseDto notFoundExceptionHandler(NoHandlerFoundException e) {
+        log.error("[UrlExceptionHandler]: {}", e);
 
         // URL 경로가 잘못 되었을 때 예외처리
         ExceptionResponseDto exceptionResponseDto = ExceptionResponseDto.builder()
@@ -58,8 +59,8 @@ public class ExceptionController {
 
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
-    public ExceptionResponseDto methodExceptionHandler(HttpRequestMethodNotSupportedException e){
-        log.error("[methodExceptionHandler]: {}",e);
+    public ExceptionResponseDto methodExceptionHandler(HttpRequestMethodNotSupportedException e) {
+        log.error("[methodExceptionHandler]: {}", e);
 
         // "HTTP Method"가 잘못 되었을 때 예외처리
         ExceptionResponseDto exceptionResponseDto = ExceptionResponseDto.builder()
@@ -74,8 +75,8 @@ public class ExceptionController {
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler
-    public ExceptionResponseDto exceptionHandler(Exception e){
-        log.error("[exceptionHandler]= {}",e);
+    public ExceptionResponseDto exceptionHandler(Exception e) {
+        log.error("[exceptionHandler]= {}", e);
 
         // 서버 예외 처리
         ExceptionResponseDto exceptionResponseDto = ExceptionResponseDto.builder()
@@ -88,8 +89,8 @@ public class ExceptionController {
     }
 
     @ExceptionHandler(NullPointerException.class)
-    public ExceptionResponseDto nullExceptionHandler(NullPointerException e){
-        log.error("[nullExceptionHandler]= {}",e);
+    public ExceptionResponseDto nullExceptionHandler(NullPointerException e) {
+        log.error("[nullExceptionHandler]= {}", e);
 
         // 널 포인터 예외 처리
         ExceptionResponseDto exceptionResponseDto = ExceptionResponseDto.builder()
@@ -103,8 +104,8 @@ public class ExceptionController {
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler
-    public ExceptionResponseDto runtimeExceptionHandler(RuntimeException e){
-        log.error("[runtimeExceptionHandler]= {}",e);
+    public ExceptionResponseDto runtimeExceptionHandler(RuntimeException e) {
+        log.error("[runtimeExceptionHandler]= {}", e);
 
         // Runtime Exception 예외 처리
         ExceptionResponseDto exceptionResponseDto = ExceptionResponseDto.builder()
@@ -114,6 +115,20 @@ public class ExceptionController {
                 .build();
 
         return exceptionResponseDto;
+    }
 
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler
+    public ExceptionResponseDto WriterNotFoundExceptionHandler(WriterNotFoundException e) {
+        log.error("[WriterNotFoundExceptionHandler]= {}", e);
+
+        // Menu Not Found 예외 처리
+        ExceptionResponseDto exceptionResponseDto = ExceptionResponseDto.builder()
+                .code(500)
+                .message("Can`t find writer")
+                .exceptionContent(e.getMessage())
+                .build();
+
+        return exceptionResponseDto;
     }
 }

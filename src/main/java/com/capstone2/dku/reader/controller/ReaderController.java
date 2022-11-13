@@ -18,8 +18,8 @@ public class ReaderController {
     }
 
     @PostMapping("/commission/{writer_id}")
-    public ResponseDto applyCommission(@PathVariable Long id, @RequestBody CommissionRequestDto commissionRequestDto){
-        return readerService.applyCommission(id, commissionRequestDto);
+    public ResponseDto applyCommission(@PathVariable Long writerId, @RequestBody CommissionRequestDto commissionRequestDto){
+        return readerService.applyCommission(writerId, commissionRequestDto);
     }
 
 

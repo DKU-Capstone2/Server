@@ -2,6 +2,7 @@ package com.capstone2.dku.reader.service;
 
 import com.capstone2.dku.ResponseDto;
 import com.capstone2.dku.commission.domain.CommissionEntity;
+import com.capstone2.dku.commission.domain.CommissionRepository;
 import com.capstone2.dku.exception.domain.WriterNotFoundException;
 import com.capstone2.dku.reader.domain.Reader;
 import com.capstone2.dku.reader.dto.CommissionRequestDto;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 public class ReaderService {
 
     private final UserRepository userRepository;
+    private final CommissionRepository commissionRepository;
 
     public ResponseDto returnReaderProfile(Long id) {
 
@@ -34,12 +36,12 @@ public class ReaderService {
         return new ResponseDto("SUCCESS", readerProfileResponseDto);
     }
 
-    public ResponseDto applyCommission(Long id, CommissionRequestDto commissionRequestDto) {
+    public ResponseDto applyCommission(Long writerId, CommissionRequestDto commissionRequestDto) {
 
-        User user = userRepository.findById(id)
+        User user = userRepository.findById(writerId)
                 .orElseThrow(() -> new IllegalArgumentException("독자를 찾지 못했습니다."));
 
-        Writer writer = userRepository.findByIdAndRole(id,"w")
+        Writer writer = userRepository.findByIdAndRole(writerId,"w")
                 .orElseThrow(() -> new WriterNotFoundException());
 
         CommissionEntity commissionEntity = CommissionEntity.builder()
@@ -48,6 +50,8 @@ public class ReaderService {
                 .commissionState("apply")
                 .commissionContent(commissionRequestDto.getCommissionContent())
                 .build();
+
+        commissionRepository.save(commissionEntity);
 
         return new ResponseDto("SUCCESS",commissionEntity.getCommissionId());
     }

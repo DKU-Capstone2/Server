@@ -70,7 +70,7 @@ public class WriterService {
         return new ResponseDto("SUCCESS", commissionEntity.getCommissionId());
     }
 
-    public ResponseDto inquiryCommission(Long commissionId) {
+    public ResponseDto writerCommission(Long commissionId) {
 
         CommissionEntity commissionEntity = commissionRepository.findById(commissionId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 커미션은 존재하지 않습니다."));

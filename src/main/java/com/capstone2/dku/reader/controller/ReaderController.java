@@ -18,12 +18,12 @@ public class ReaderController {
     }
 
     @PostMapping("/commission/{writer_id}")
-    public ResponseDto applyCommission(@PathVariable Long writerId, @RequestBody CommissionRequestDto commissionRequestDto){
+    public ResponseDto applyCommission(@PathVariable("writer_id") Long writerId, @RequestBody CommissionRequestDto commissionRequestDto){
         return readerService.applyCommission(writerId, commissionRequestDto);
     }
 
     @GetMapping("reader/{commission_id}")
-    public ResponseDto inquiryCommission(@PathVariable Long commissionId){
-        return readerService.inquiryCommission(commissionId);
+    public ResponseDto inquiryCommission(@PathVariable("commission_id") Long commissionId){
+        return readerService.writerCommission(commissionId);
     }
 }

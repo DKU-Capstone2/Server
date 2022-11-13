@@ -7,6 +7,7 @@ import com.querydsl.core.types.dsl.*;
 import com.querydsl.core.types.PathMetadata;
 import javax.annotation.processing.Generated;
 import com.querydsl.core.types.Path;
+import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
@@ -17,20 +18,40 @@ public class QCommissionEntity extends EntityPathBase<CommissionEntity> {
 
     private static final long serialVersionUID = 2045690033L;
 
+    private static final PathInits INITS = PathInits.DIRECT2;
+
     public static final QCommissionEntity commissionEntity = new QCommissionEntity("commissionEntity");
 
-    public final NumberPath<Long> postId = createNumber("postId", Long.class);
+    public final StringPath commissionContent = createString("commissionContent");
+
+    public final NumberPath<Long> commissionId = createNumber("commissionId", Long.class);
+
+    public final StringPath commissionState = createString("commissionState");
+
+    public final com.capstone2.dku.reader.domain.QReader reader;
+
+    public final com.capstone2.dku.writer.domain.QWriter writer;
 
     public QCommissionEntity(String variable) {
-        super(CommissionEntity.class, forVariable(variable));
+        this(CommissionEntity.class, forVariable(variable), INITS);
     }
 
     public QCommissionEntity(Path<? extends CommissionEntity> path) {
-        super(path.getType(), path.getMetadata());
+        this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
     }
 
     public QCommissionEntity(PathMetadata metadata) {
-        super(CommissionEntity.class, metadata);
+        this(metadata, PathInits.getFor(metadata, INITS));
+    }
+
+    public QCommissionEntity(PathMetadata metadata, PathInits inits) {
+        this(CommissionEntity.class, metadata, inits);
+    }
+
+    public QCommissionEntity(Class<? extends CommissionEntity> type, PathMetadata metadata, PathInits inits) {
+        super(type, metadata, inits);
+        this.reader = inits.isInitialized("reader") ? new com.capstone2.dku.reader.domain.QReader(forProperty("reader")) : null;
+        this.writer = inits.isInitialized("writer") ? new com.capstone2.dku.writer.domain.QWriter(forProperty("writer")) : null;
     }
 
 }

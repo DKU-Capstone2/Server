@@ -85,16 +85,16 @@ public class UserService {
     }
 
     @Transactional
-    public ResponseDto withdrawal(String email, ServletRequest request) {
+    public ResponseDto withdrawal(Long userId) {
 
-        String token = jwtAuthenticationProvider.resolveToken((HttpServletRequest) request);
-        User user = (User) userDetailsService.loadUserByUsername(jwtAuthenticationProvider.getUserPk(token));
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("유저를 찾지 못했습니다."));
 
-        if (!userRepository.existsByEmail(email)) {
+        if (!userRepository.existsByEmail(user.getEmail())) {
             return new ResponseDto("FAIL", "존재하지 않는 이메일입니다.");
         }
 
-        if (!email.equals(user.getEmail())) {
+        if (!user.getEmail().equals(user.getEmail())) {
             return new ResponseDto("FAIL", "이메일을 다시 확인해주세요.");
         }
 

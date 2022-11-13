@@ -1,12 +1,14 @@
 package com.capstone2.dku.reader.domain;
 
 import com.capstone2.dku.user.domain.User;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 
+@NoArgsConstructor
 @DiscriminatorValue("r")
 @PrimaryKeyJoinColumn(name = "reader_id")
 @Entity

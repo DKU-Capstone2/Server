@@ -26,9 +26,9 @@ public class UserController {
         return userService.signIn(signInRequestDto);
     }
 
-    @DeleteMapping("/user/withdrawal/{email}")
-    public ResponseDto Withdrawal(@PathVariable String email, ServletRequest request){
-        return userService.withdrawal(email, request);
+    @DeleteMapping("/user/{user_id}/withdrawal")
+    public ResponseDto Withdrawal(@PathVariable("user_id") Long userId){
+        return userService.withdrawal(userId);
     }
 
 

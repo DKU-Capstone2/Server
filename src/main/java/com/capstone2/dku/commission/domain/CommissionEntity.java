@@ -10,4 +10,6 @@ public class CommissionEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "commission_id")
     private Long postId;
+
+
 }

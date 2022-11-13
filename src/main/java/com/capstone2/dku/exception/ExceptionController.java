@@ -122,7 +122,7 @@ public class ExceptionController {
     public ExceptionResponseDto WriterNotFoundExceptionHandler(WriterNotFoundException e) {
         log.error("[WriterNotFoundExceptionHandler]= {}", e);
 
-        // Menu Not Found 예외 처리
+        // Writer Not Found 예외 처리
         ExceptionResponseDto exceptionResponseDto = ExceptionResponseDto.builder()
                 .code(500)
                 .message("Can`t find writer")

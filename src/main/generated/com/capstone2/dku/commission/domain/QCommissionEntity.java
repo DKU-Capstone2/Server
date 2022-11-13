@@ -28,7 +28,7 @@ public class QCommissionEntity extends EntityPathBase<CommissionEntity> {
 
     public final StringPath commissionState = createString("commissionState");
 
-    public final com.capstone2.dku.reader.domain.QReader reader;
+    public final com.capstone2.dku.user.domain.QUser user;
 
     public final com.capstone2.dku.writer.domain.QWriter writer;
 
@@ -50,7 +50,7 @@ public class QCommissionEntity extends EntityPathBase<CommissionEntity> {
 
     public QCommissionEntity(Class<? extends CommissionEntity> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.reader = inits.isInitialized("reader") ? new com.capstone2.dku.reader.domain.QReader(forProperty("reader")) : null;
+        this.user = inits.isInitialized("user") ? new com.capstone2.dku.user.domain.QUser(forProperty("user")) : null;
         this.writer = inits.isInitialized("writer") ? new com.capstone2.dku.writer.domain.QWriter(forProperty("writer")) : null;
     }
 

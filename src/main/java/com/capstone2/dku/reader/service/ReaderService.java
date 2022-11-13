@@ -45,7 +45,7 @@ public class ReaderService {
                 .orElseThrow(() -> new WriterNotFoundException());
 
         CommissionEntity commissionEntity = CommissionEntity.builder()
-                .reader((Reader)user)
+                .user(user)
                 .writer(writer)
                 .commissionState("apply")
                 .commissionContent(commissionRequestDto.getCommissionContent())

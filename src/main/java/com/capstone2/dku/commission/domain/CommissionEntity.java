@@ -1,6 +1,7 @@
 package com.capstone2.dku.commission.domain;
 
 import com.capstone2.dku.reader.domain.Reader;
+import com.capstone2.dku.user.domain.User;
 import com.capstone2.dku.writer.domain.Writer;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,8 +20,8 @@ public class CommissionEntity {
     private Long commissionId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "reader_id")
-    private Reader reader;
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "writer_id")
@@ -35,8 +36,8 @@ public class CommissionEntity {
     private String commissionContent;
 
     @Builder
-    public CommissionEntity(Reader reader, Writer writer, String commissionState, String commissionContent){
-        this.reader = reader;
+    public CommissionEntity(User user, Writer writer, String commissionState, String commissionContent){
+        this.user = user;
         this.writer = writer;
         this.commissionState = commissionState;
         this.commissionContent = commissionContent;

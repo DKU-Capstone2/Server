@@ -22,5 +22,8 @@ public class ReaderController {
         return readerService.applyCommission(writerId, commissionRequestDto);
     }
 
-
+    @GetMapping("reader/{commission_id}")
+    public ResponseDto inquiryCommission(@PathVariable Long commissionId){
+        return readerService.inquiryCommission(commissionId);
+    }
 }

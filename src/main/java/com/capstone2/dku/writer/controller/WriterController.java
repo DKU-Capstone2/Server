@@ -28,4 +28,8 @@ public class WriterController {
         return writerService.decideCommission(commissionId, decide);
     }
 
+    @GetMapping("reader/{commission_id}")
+    public ResponseDto inquiryCommission(@PathVariable Long commissionId){
+        return writerService.inquiryCommission(commissionId);
+    }
 }

@@ -55,4 +55,13 @@ public class ReaderService {
 
         return new ResponseDto("SUCCESS",commissionEntity.getCommissionId());
     }
+
+    public ResponseDto inquiryCommission(Long commissionId) {
+
+        CommissionEntity commissionEntity = commissionRepository.findById(commissionId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 커미션은 존재하지 않습니다."));
+
+        // 커미션의 상태 반환
+        return new ResponseDto("SUCCESS", commissionEntity.getCommissionState());
+    }
 }

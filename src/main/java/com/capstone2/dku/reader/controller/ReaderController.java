@@ -12,8 +12,8 @@ public class ReaderController {
 
     private final ReaderService readerService;
 
-    @GetMapping("/reader/profile/{id}")
-    public ResponseDto returnWriterProfile(@PathVariable Long id){
+    @GetMapping("/reader/profile/{user_id}")
+    public ResponseDto returnWriterProfile(@PathVariable("user_Id") Long id){
         return readerService.returnReaderProfile(id);
     }
 

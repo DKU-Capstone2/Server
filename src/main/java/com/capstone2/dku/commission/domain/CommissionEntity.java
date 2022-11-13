@@ -1,14 +1,15 @@
 package com.capstone2.dku.commission.domain;
 
-import com.capstone2.dku.reader.domain.Reader;
 import com.capstone2.dku.user.domain.User;
 import com.capstone2.dku.writer.domain.Writer;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 
+@NoArgsConstructor
 @Getter @Setter // 엔티티에는 "@Getter", "@Setter"를 사용하면 안되지만 시간이 없어 사용했습니다.
 @Table(name = "commissions")
 @Entity

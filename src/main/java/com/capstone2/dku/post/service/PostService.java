@@ -23,9 +23,10 @@ public class PostService {
     private final UserRepository userRepository;
     private final PostRepository postRepository;
 
-    public ResponseDto createPost(ServletRequest request, CreatePostRequestDto createPostRequestDto) {
-        String token = jwtAuthenticationProvider.resolveToken((HttpServletRequest) request);
-        User user = (User) userDetailsService.loadUserByUsername(jwtAuthenticationProvider.getUserPk(token));
+    public ResponseDto createPost(Long userId, CreatePostRequestDto createPostRequestDto) {
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("독자를 찾지 못했습니다."));
 
         Post post = Post.builder()
                 .type(createPostRequestDto.getType())
